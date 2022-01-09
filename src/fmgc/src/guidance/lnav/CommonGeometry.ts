@@ -1,8 +1,13 @@
+// Copyright (c) 2021-2022 FlyByWire Simulations
+// Copyright (c) 2021-2022 Synaptic Simulations
+//
+// SPDX-License-Identifier: GPL-3.0
+
 import { Coordinates } from '@fmgc/flightplanning/data/geo';
 import { ControlLaw, LateralPathGuidance } from '@fmgc/guidance/ControlLaws';
-import { SegmentType } from '@fmgc/wtsdk';
 import { MathUtils } from '@shared/MathUtils';
 import { Constants } from '@shared/Constants';
+import { SegmentType } from '@fmgc/flightplanning/FlightPlanSegment';
 
 /**
  * Compute the remaining distance around an arc
@@ -150,6 +155,18 @@ export function maxBank(tas: Knots, toGuidedPath: boolean): Degrees {
         return 30 + Math.max(0, ((450 - tas) * 11 / 150));
     }
     return 30;
+}
+
+export function getRollAnticipationDistance(gs: Knots, bankA: Degrees, bankB: Degrees): NauticalMiles {
+    // calculate delta phi
+    const deltaPhi = Math.abs(bankA - bankB);
+
+    // calculate RAD
+    const maxRollRate = 5; // deg / s, TODO picked off the wind
+    const k2 = 0.0038;
+    const rad = gs / 3600 * (Math.sqrt(1 + 2 * k2 * 9.81 * deltaPhi / maxRollRate) - 1) / (k2 * 9.81);
+
+    return rad;
 }
 
 export function courseToFixDistanceToGo(ppos: Coordinates, course: Degrees, fix: Coordinates): NauticalMiles {
