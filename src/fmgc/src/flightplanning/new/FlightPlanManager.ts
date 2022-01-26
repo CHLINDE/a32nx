@@ -45,17 +45,26 @@ export class FlightPlanManager {
         this.plans[index] = undefined;
     }
 
-    swap(a: number, b: number) {
-        this.assertFlightPlanExists(a);
-        this.assertFlightPlanExists(b);
-    }
-
     copy(from: number, to: number) {
         this.assertFlightPlanExists(from);
 
         const newPlan = this.get(from).clone();
 
         this.set(to, newPlan);
+    }
+
+    swap(a: number, b: number) {
+        this.assertFlightPlanExists(a);
+        this.assertFlightPlanExists(b);
+
+        const planA = this.get(a);
+        const planB = this.get(b);
+
+        this.delete(a);
+        this.delete(b);
+
+        this.set(a, planB);
+        this.set(b, planA);
     }
 
     private assertFlightPlanExists(index: number) {

@@ -23,6 +23,13 @@ export class FlightPlanService {
         return this.flightPlanManager.get(FlightPlanIndex.Active);
     }
 
+    /**
+     * Obtains the specified secondary flight plan, 1-indexed
+     */
+    static secondary(index: number) {
+        return this.flightPlanManager.get(FlightPlanIndex.FirstSecondary + index - 1);
+    }
+
     static get hasTemporary() {
         return this.flightPlanManager.has(FlightPlanIndex.Temporary);
     }
@@ -68,7 +75,9 @@ export class FlightPlanService {
             this.flightPlanManager.delete(FlightPlanIndex.Temporary);
         }
 
-        this.flightPlanManager.delete(planIndex);
+        if (this.flightPlanManager.has(planIndex)) {
+            this.flightPlanManager.delete(planIndex);
+        }
         this.flightPlanManager.create(planIndex);
 
         await this.flightPlanManager.get(planIndex).setOriginAirport(fromIcao);
