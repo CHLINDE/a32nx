@@ -219,6 +219,9 @@ class CDUFlightPlanPage {
                 if (wp.additionalData) {
                     // ARINC Leg Types - R1A 610
                     switch (wp.additionalData.legType) {
+                        case 1: // AF
+                            fixAnnotation = `${Math.round(wp.additionalData.rho).toString().substring(0, 1).padStart(2, '0')} ${wp.additionalData.navaidIdent.substring(0, 3)}`;
+                            break;
                         case 2: // CA
                         case 5: // CI
                             fixAnnotation = `C${wp.additionalData.vectorsCourse.toFixed(0).padStart(3,"0")}\u00b0`;

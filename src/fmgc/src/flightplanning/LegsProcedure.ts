@@ -431,6 +431,7 @@ export class LegsProcedure {
       const theta = leg.trueDegrees ? leg.theta : A32NX_Util.magneticToTrue(leg.theta, magVar);
       const vectorsCourse = leg.trueDegrees ? leg.course : A32NX_Util.magneticToTrue(leg.course, magVar);
 
+      waypoint.additionalData.navaidIdent = navaid.icao.substring(7, 12);
       waypoint.additionalData.navaid = { lat: navaid.lat, long: navaid.lon };
       waypoint.additionalData.rho = leg.rho / 1852;
       waypoint.additionalData.theta = theta;
