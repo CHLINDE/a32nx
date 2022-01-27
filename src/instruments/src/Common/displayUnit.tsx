@@ -80,6 +80,13 @@ export const DisplayUnit: React.FC<DisplayUnitProps> = (props) => {
                     >
                         (MAX 40 SECONDS)
                     </text>
+                    <text
+                        className="SelfTestText"
+                        x="50%"
+                        y="56%"
+                    >
+                        Moin Linde!
+                    </text>
                 </svg>
             </>
         );
