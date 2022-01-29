@@ -85,7 +85,7 @@ export const DisplayUnit: React.FC<DisplayUnitProps> = (props) => {
                         x="50%"
                         y="62%"
                     >
-                        Moin Linde!
+                        MOIN LINDE
                     </text>
                 </svg>
             </>
